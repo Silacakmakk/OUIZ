@@ -1,0 +1,20 @@
+body{
+    font-family:"Potta One",cursive;
+    height:100px;
+    background-color: #fff ;
+    /*overflow-x: hidden;*/
+    user-select: none;
+}
+.baslik{
+    font-family: "Potta One", cursive;
+    margin:150px  80px 50px 20px;
+    font-size: 55px;
+    color: #00aeef; 
+    margin-top: 20px; /* İstenilen başlık ile diğer içerik arasındaki boşluğu ayarlayın */
+}   
+.icerik{
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+

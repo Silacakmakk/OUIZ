@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>QUIZ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS.css') }}">
+</head>
+<body class="body">
+    <div class="icerik">
+        <h1 class="baslik">PYTHON'DA AI GELİŞTİRME</h1>
+        <form method="POST" action="/">
+            <label for="name">Ad ve Soyad:</label><br>
+            <input type="text" id="name" name="name" required><br><br>
+            <button type="submit">Sınava Başla</button>
+        </form>
+        <footer>
+            <p><strong>Geliştirici: Sıla Çakmak Ünvanı: Bilgisayar Mühendisi</strong></p><br>
+            <a href="https://www.pythonanywhere.com/user/silaCakmak/files/home/silaCakmak/mysite" target="_blank">Buluttaki proje dosyasının klasörüne ait bağlantı.</a>
+        </footer>
+    </div>
+</body>
+</html>

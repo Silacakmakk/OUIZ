@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS.css') }}">
+    <style>
+        /* Puanı göstermek için stil */
+        #scoreDisplay {
+            display: none;
+            margin-top: 20px;
+        }
+
+        /* En yüksek puan sağ üst köşede */
+        #highScoreDisplay {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+        /* Alt bilgi için stil */
+        footer {
+            margin-top: 50px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="body">
+    <div class="icerik">
+        <h1 class="baslik">Sınava Hoşgeldiniz!</h1>
+        
+        <div id="highScoreDisplay">En Yüksek Puan: <span id="highScore">0</span></div>
+        
+        <form id="quizForm" method="POST" action="/quiz">
+            <label><strong>SORU 1:</strong>Python'da AI geliştirme için en çok kullanılan kütüphanelerden biri hangisidir?</label><br>
+            <input type="radio" name="question1" value="correct" required> TensorFlow<br>
+            <input type="radio" name="question1" value="wrong"> Scikit-learn<br>
+            <input type="radio" name="question1" value="wrong"> Pandas<br><br>
+
+            <label><strong>SORU 2:</strong>TensorFlow nedir ve ne amaçla kullanılır?</label><br>
+            <input type="radio" name="question2" value="wrong" required> TensorFlow, web geliştirme için kullanılan bir JavaScript kütüphanesidir.<br>
+            <input type="radio" name="question2" value="wrong">TensorFlow, sadece veri görselleştirme araçlarını içeren bir Python modülüdür.<br>
+            <input type="radio" name="question2" value="correct"> TensorFlow, Google tarafından geliştirilen
+            açık kaynaklı bir makine öğrenmesi kütüphanesidir. Derin öğrenme modelleri oluşturmak ve eğitmek için kullanılır.<br><br>
+
+            <label><strong>SORU 3:</strong>Python'da veri ön işleme için hangi kütüphaneleri kullanabilirsiniz?</label><br>
+            <input type="radio" name="question3" value="correct" required> Pandas, NumPy<br>
+            <input type="radio" name="question3" value="wrong">Matplotlib, Seaborn<br>
+            <input type="radio" name="question3" value="wrong"> Flask, Django<br><br>
+
+            <label><strong>SORU 4:</strong>Makine öğrenmesi nedir?</label><br>
+            <input type="radio" name="question4" value="wrong" required> Makine öğrenmesi, internet siteleri oluşturmak
+            için kullanılan bir yazılım geliştirme yöntemidir.<br>
+            <input type="radio" name="question4" value="correct"> Makine öğrenmesi, bilgisayarların 
+            verilerden öğrenmesini ve bu verilerle kararlar almasını sağlayan bir AI alanıdır.<br>
+            <input type="radio" name="question4" value="wrong"> Makine öğrenmesi, 
+            sadece veri görselleştirme ve grafik çizme araçlarını içerir.<br><br>
+
+            <button class="btn" type="submit"><b>Sonucu Göster</b></button>
+        </form>
+
+        <div id="scoreDisplay">
+            <h2>Puanınız: <span id="score"></span></h2>
+        </div>
+
+        <footer>
+            <p><strong>Geliştirici: Sıla Çakmak Ünvanı: Bilgisayar Mühendisi</strong></p><br>
+            <a href="{{ url_for('index') }}">1- Ana Sayfaya Bağlantı</a><br>
+            <a href="https://www.pythonanywhere.com/user/silaCakmak/files/home/silaCakmak/mysite" target="_blank">2- Buluttaki proje dosyasının klasörüne ait bağlantı.</a>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('quizForm').onsubmit = function(event) {
+            event.preventDefault(); // Formun yenilenmesini önler
+
+            let score = 0;
+
+            // Soru 1
+            if (document.querySelector('input[name="question1"]:checked').value === "correct") {
+                score += 25; // Soru başına puan (toplamda 100 puan)
+            }
+
+            // Soru 2
+            if (document.querySelector('input[name="question2"]:checked').value === "correct") {
+                score += 25; // Soru başına puan
+            }
+
+            // Soru 3
+            if (document.querySelector('input[name="question3"]:checked').value === "correct") {
+                score += 25; // Soru başına puan
+            }
+
+            // Soru 4
+            if (document.querySelector('input[name="question4"]:checked').value === "correct") {
+                score += 25; // Soru başına puan
+            }
+
+            // Puanı gösterme
+            document.getElementById('score').textContent = score;
+            document.getElementById('scoreDisplay').style.display = "block";
+
+            // En yüksek puanı saklama ve gösterme
+            let highScore = localStorage.getItem('highScore') || 0;
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('highScore', highScore);
+            }
+            document.getElementById('highScore').textContent = highScore;
+
+            // Formu sunucuya göndermek için:
+            let form = document.getElementById('quizForm');
+            let formData = new FormData(form);
+            
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            }).then(response => response.json()).then(data => {
+                // Sunucudan dönen yanıtı işleyebilirsiniz
+            }).catch(error => console.error('Error:', error));
+        };
+    </script>
+</body>
+</html>
